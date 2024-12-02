@@ -1,3 +1,6 @@
+package dturner.aoc24.day02
+
+import dturner.aoc24.utils.*
 import kotlin.math.abs
 
 fun main() {
@@ -13,7 +16,7 @@ fun main() {
 
     check(part1(testInput) == 2)
 
-    val input = readInput("Day02-1")
+    val input = readInput("Day02")
     part1(input).println()
 
     check(part2(testInput) == 4)
