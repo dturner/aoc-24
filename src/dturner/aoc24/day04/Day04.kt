@@ -144,9 +144,9 @@ fun part2(input: List<String>): Int {
 
     // From a 3x3 char array, determine whether it's an X-MAS.
     // An X-MAS can be any of the following:
-    // M S S M M S M S
+    // M S S M M M S S
     //  A   A   A   A
-    // M S,M S,S M,S M
+    // M S,S M,S S,M M
 
     val inputCharArray = input.map { it.toCharArray() }
     val rowSize = inputCharArray.first().size
