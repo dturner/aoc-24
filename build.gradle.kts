@@ -1,15 +1,21 @@
 plugins {
-    kotlin("jvm") version "2.1.0"
+    kotlin("jvm") version "2.0.21"
 }
 
-sourceSets {
-    main {
-        kotlin.srcDir("src")
-    }
+group = "dturner.aoc24"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
 }
 
-tasks {
-    wrapper {
-        gradleVersion = "8.11.1"
-    }
+dependencies {
+    testImplementation(kotlin("test"))
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(17)
 }
