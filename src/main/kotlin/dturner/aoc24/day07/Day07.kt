@@ -31,54 +31,30 @@ fun main() {
 
     val part2Result = part2(input)
     println(part2Result)
-
+    check(part2Result == 146111650210682L)
 }
 
 fun part1(input: List<String>): Long {
-
     val equations = parseEquations(input)
-    var validResultSum = 0L
-
-    for (equation in equations){
-
-        // Determine whether there's a valid set of operators that can be used to get the expectedResult.
-        val numOperators = equation.inputValues.size - 1
-        val operatorPerms = generateOperatorPermutations(numOperators, listOf(PLUS, MULTIPLY))
-        var isResultValid = false
-
-        for (permutation in operatorPerms){
-            var result = equation.inputValues.first()
-
-            permutation.forEachIndexed{ operatorIndex, operator ->
-                when (operator){
-                    PLUS -> result += equation.inputValues[operatorIndex+1]
-                    MULTIPLY -> result *= equation.inputValues[operatorIndex+1]
-                    else -> { // do nothing
-                    }
-                }
-            }
-
-            if (result == equation.expectedResult){
-                isResultValid = true
-                break
-            }
-        }
-
-        if (isResultValid) validResultSum += equation.expectedResult
-    }
-    return validResultSum
+    return getValidResultSum(equations, listOf(PLUS, MULTIPLY))
 }
 
 fun part2(input: List<String>): Long {
-
     val equations = parseEquations(input)
+    return getValidResultSum(equations, listOf(PLUS, MULTIPLY, CONCAT))
+}
+
+private fun getValidResultSum(equations: List<Equation>, operatorsToUse: List<Operator>): Long {
     var validResultSum = 0L
 
     for (equation in equations){
 
         // Determine whether there's a valid set of operators that can be used to get the expectedResult.
         val numOperators = equation.inputValues.size - 1
-        val operatorPerms = generateOperatorPermutations(numOperators, listOf(PLUS, MULTIPLY, CONCAT))
+
+        // TODO: Doing this for every equation is inefficient.
+        //  The permutations could be calculated at the start when we know what the max number of input values.
+        val operatorPerms = generateOperatorPermutations(numOperators, operatorsToUse)
         var isResultValid = false
 
         for (permutation in operatorPerms){
@@ -88,9 +64,8 @@ fun part2(input: List<String>): Long {
                 when (operator){
                     PLUS -> result += equation.inputValues[operatorIndex+1]
                     MULTIPLY -> result *= equation.inputValues[operatorIndex+1]
+                    // TODO: This is super inefficient. Better to keep input values as strings.
                     CONCAT -> result = (result.toString() + equation.inputValues[operatorIndex+1].toString()).toLong()
-                    else -> { // do nothing
-                    }
                 }
             }
 
@@ -104,7 +79,6 @@ fun part2(input: List<String>): Long {
     }
     return validResultSum
 }
-
 
 private fun parseEquations(input: List<String>) = input.map {
     val parts = it.split(":")
@@ -128,14 +102,8 @@ fun generateOperatorPermutations(size: Int, operators: List<Operator>) : List<Li
     return operatorList
 }
 
-
 enum class Operator{
     PLUS,
     MULTIPLY,
     CONCAT
 }
-
-/*fun part2(input: List<String>): Int {
-
-
-}*/

@@ -8,24 +8,6 @@ import dturner.aoc24.day07.Operator.*
 class Day07KtTest {
 
     @Test
-    fun testGenerateOperators() {
-
-        val input1 = 1
-        val expected1 = listOf(listOf(PLUS), listOf(MULTIPLY))
-        assertEquals(expected1, generateOperators(input1))
-
-        val input2 = 2
-        val expected2 = listOf(
-            listOf(PLUS, PLUS),
-            listOf(PLUS, MULTIPLY),
-            listOf(MULTIPLY, PLUS),
-            listOf(MULTIPLY, MULTIPLY)
-        )
-
-        assertEquals(expected2, generateOperators(input2))
-    }
-
-    @Test
     fun testGenerateOperatorPermutations() {
 
         val input1 = 1
@@ -46,7 +28,5 @@ class Day07KtTest {
             listOf(CONCAT, CONCAT)
         )
         assertEquals(expected2, generateOperatorPermutations(input2, operators))
-
-
     }
 }
